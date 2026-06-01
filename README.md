@@ -290,3 +290,4 @@ MIT © 2026 — Juan Angel Urcia Reyes (Tecsup, Perú)
 
 **Juan Angel Urcia Reyes** — [@juan.urcia@tecsup.edu.pe](mailto:juan.urcia@tecsup.edu.pe)
 Estudiante 5° semestre C24-B · Tecsup
+# Examen-3---1-06
