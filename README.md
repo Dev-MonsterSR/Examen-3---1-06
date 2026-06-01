@@ -10,8 +10,8 @@
 
 ## 🌐 Demo en línea
 
-- **Frontend + API:** [https://examen3-api.onrender.com](https://examen3-api.onrender.com) _(reemplazar con URL real de Render / Railway)_
-- **Healthcheck:** [/api/health](https://examen3-api.onrender.com/api/health)
+- **Frontend + API:** [[https://examen3-api.onrender.com](https://examen3-api.onrender.com](https://examen3.juanangel.me/ ))
+
 
 > Si el deploy no está activo todavía, ver la sección [Despliegue](#-despliegue) más abajo.
 
