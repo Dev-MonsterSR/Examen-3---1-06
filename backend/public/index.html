@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Examen 3 · API Productos</title>
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="dot"></span>
+        <h1>Productos API</h1>
+        <span class="env-badge" id="env-badge">…</span>
+      </div>
+      <nav class="links">
+        <a href="/api/health" target="_blank" rel="noreferrer">/api/health</a>
+        <a href="/api/products" target="_blank" rel="noreferrer">/api/products</a>
+        <a href="https://github.com" target="_blank" rel="noreferrer" id="repo-link">GitHub ↗</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h2>Catálogo de productos</h2>
+        <p>CRUD sobre <code>/api/products</code>. Las imágenes se generan automáticamente desde una API externa (<em>Lorem Picsum</em>) al crear un producto.</p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h3 id="form-title">Crear producto</h3>
+          <button type="button" class="btn btn-ghost" id="reset-btn" hidden>Cancelar edición</button>
+        </div>
+        <form id="product-form" class="form-grid" novalidate>
+          <input type="hidden" name="id" />
+          <label class="field">
+            <span>Nombre</span>
+            <input name="name" type="text" required minlength="2" maxlength="200" placeholder="Ej. Zapatillas deportivas" />
+          </label>
+          <label class="field field-wide">
+            <span>Descripción</span>
+            <textarea name="description" required minlength="10" maxlength="2000" rows="2" placeholder="Detalle del producto (mín. 10 caracteres)"></textarea>
+          </label>
+          <label class="field">
+            <span>Precio (S/)</span>
+            <input name="price" type="number" step="0.01" min="0.01" required placeholder="99.90" />
+          </label>
+          <label class="field">
+            <span>Stock</span>
+            <input name="stock" type="number" step="1" min="0" required placeholder="10" />
+          </label>
+          <label class="field field-wide">
+            <span>URL imagen <em class="hint">(opcional, se autogenera si está vacía)</em></span>
+            <input name="image_url" type="url" maxlength="500" placeholder="https://…" />
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submit-btn">Crear producto</button>
+            <span class="form-msg" id="form-msg" role="status" aria-live="polite"></span>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h3>Listado</h3>
+          <div class="panel-tools">
+            <input id="search" type="search" placeholder="Filtrar por nombre…" />
+            <button type="button" class="btn" id="refresh-btn">↻ Refrescar</button>
+          </div>
+        </div>
+        <div id="products" class="grid"></div>
+        <p id="empty-msg" class="empty" hidden>No hay productos todavía. Crea el primero con el formulario de arriba.</p>
+      </section>
+
+      <section class="panel api-tester">
+        <div class="panel-head">
+          <h3>Probador rápido (cURL-style)</h3>
+        </div>
+        <details>
+          <summary>Ver ejemplos</summary>
+          <pre><code># Listar
+curl -s http://localhost:3000/api/products
+
+# Obtener uno
+curl -s http://localhost:3000/api/products/1
+
+# Crear
+curl -s -X POST http://localhost:3000/api/products \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Zapatillas X","description":"Modelo deportivo 2026","price":199.90,"stock":15}'
+
+# Actualizar
+curl -s -X PUT http://localhost:3000/api/products/1 \
+  -H "Content-Type: application/json" \
+  -d '{"price":179.90,"stock":10}'
+
+# Eliminar
+curl -s -X DELETE http://localhost:3000/api/products/1 -i
+</code></pre>
+        </details>
+      </section>
+    </main>
+
+    <footer>
+      <span>Examen 3 · Tecsup · 2026</span>
+    </footer>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

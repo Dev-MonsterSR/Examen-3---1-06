@@ -1,0 +1,24 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Docker
+mysql_data/
+mysql-data/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Build
+dist/
+build/
+coverage/
