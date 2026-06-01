@@ -38,23 +38,30 @@ async function getById(req, res) {
 async function create(req, res) {
   const { name, description, price, stock } = req.body;
 
-  // Si el cliente NO mandó image_url, generamos una desde la API externa.
-  // Si la mandó, la respetamos pero la verificamos (HEAD) por si está rota.
-  let imageUrl = req.body.image_url;
-  if (!imageUrl) {
-    imageUrl = generateImageUrl(name);
-    imageUrl = await verifyImageUrl(imageUrl);
-  } else {
-    imageUrl = await verifyImageUrl(imageUrl);
-  }
-
+  // Paso 1: insertar primero con un placeholder vacío para poder usar el id generado
+  // (la PK autoincrement) en el seed de la imagen. Esto garantiza que:
+  //  - cada producto tenga una imagen ÚNICA (gracias al id)
+  //  - la imagen sea ESTABLE (no cambia al recargar: mismo id → mismo seed → misma imagen)
   const [result] = await getPool().query(
     `INSERT INTO products (name, description, price, stock, image_url)
      VALUES (?, ?, ?, ?, ?)`,
-    [name, description, price, stock, imageUrl]
+    [name, description, price, stock, '']
   );
+  const newId = result.insertId;
 
-  const [rows] = await getPool().query('SELECT * FROM products WHERE id = ?', [result.insertId]);
+  // Paso 2: generar la URL usando el id real y el nombre.
+  // Si el cliente mandó image_url, la respetamos (igual verificada por HEAD).
+  // Si no, generamos una desde la API externa con seed único por id.
+  let imageUrl = req.body.image_url;
+  if (!imageUrl) {
+    imageUrl = generateImageUrl(newId, name);
+  }
+  imageUrl = await verifyImageUrl(imageUrl);
+
+  // Paso 3: actualizar la fila con la URL definitiva
+  await getPool().query('UPDATE products SET image_url = ? WHERE id = ?', [imageUrl, newId]);
+
+  const [rows] = await getPool().query('SELECT * FROM products WHERE id = ?', [newId]);
   res.status(201).json({ data: rowToProduct(rows[0]) });
 }
 

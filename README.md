@@ -10,10 +10,11 @@
 
 ## 🌐 Demo en línea
 
-- **Frontend + API:** [[https://examen3-api.onrender.com](https://examen3-api.onrender.com](https://examen3.juanangel.me/ ))
+- **Frontend + API:** [https://examen3.juanangel.me/](https://examen3.juanangel.me/)
+- **Healthcheck:** [/api/health](https://examen3.juanangel.me/api/health)
+- **API Productos:** [/api/products](https://examen3.juanangel.me/api/products)
 
-
-> Si el deploy no está activo todavía, ver la sección [Despliegue](#-despliegue) más abajo.
+> Desplegado en **Railway** (túnel Cloudflare → `examen3.juanangel.me`).
 
 ---
 

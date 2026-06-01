@@ -15,11 +15,6 @@
         <h1>Productos API</h1>
         <span class="env-badge" id="env-badge">…</span>
       </div>
-      <nav class="links">
-        <a href="/api/health" target="_blank" rel="noreferrer">/api/health</a>
-        <a href="/api/products" target="_blank" rel="noreferrer">/api/products</a>
-        <a href="https://github.com" target="_blank" rel="noreferrer" id="repo-link">GitHub ↗</a>
-      </nav>
     </header>
 
     <main>
@@ -73,38 +68,10 @@
         <div id="products" class="grid"></div>
         <p id="empty-msg" class="empty" hidden>No hay productos todavía. Crea el primero con el formulario de arriba.</p>
       </section>
-
-      <section class="panel api-tester">
-        <div class="panel-head">
-          <h3>Probador rápido (cURL-style)</h3>
-        </div>
-        <details>
-          <summary>Ver ejemplos</summary>
-          <pre><code># Listar
-curl -s http://localhost:3000/api/products
-
-# Obtener uno
-curl -s http://localhost:3000/api/products/1
-
-# Crear
-curl -s -X POST http://localhost:3000/api/products \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Zapatillas X","description":"Modelo deportivo 2026","price":199.90,"stock":15}'
-
-# Actualizar
-curl -s -X PUT http://localhost:3000/api/products/1 \
-  -H "Content-Type: application/json" \
-  -d '{"price":179.90,"stock":10}'
-
-# Eliminar
-curl -s -X DELETE http://localhost:3000/api/products/1 -i
-</code></pre>
-        </details>
-      </section>
     </main>
 
     <footer>
-      <span>Examen 3 · Tecsup · 2026</span>
+      <span>Examen 3</span>
     </footer>
 
     <script src="/app.js" defer></script>

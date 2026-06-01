@@ -1,23 +1,22 @@
-name: examen3
+version: "3.8"
 
 services:
   mysql:
     image: mysql:8.0
-    container_name: examen3-mysql
+    container_name: examen3juan-mysql
     restart: unless-stopped
     # network_mode: host evita el docker-proxy que está bufereando/rompiendo
     # conexiones MySQL salientes en este host (ver WORK_LOG §13.6).
     network_mode: host
     environment:
       MYSQL_ROOT_PASSWORD: root_pass
-      MYSQL_DATABASE: ${DB_NAME:-examen3}
-      MYSQL_USER: ${DB_USER:-examen}
+      MYSQL_DATABASE: ${DB_NAME:-examen3juan}
+      MYSQL_USER: ${DB_USER:-examenjuan}
       MYSQL_PASSWORD: ${DB_PASSWORD:-examen_pass}
     volumes:
-      - mysql_data:/var/lib/mysql
-    # Sin ports: con network_mode: host, MySQL ya escucha en 127.0.0.1:3306
-    # directamente. (El 3306 está libre en el host, no chocamos con
-    # plataforma-db porque ese solo está dentro de su propio compose net.)
+      - examen3juan_mysql_data:/var/lib/mysql
+    # Sin ports: con network_mode: host, MySQL escucha en 127.0.0.1:3306.
+    # El 3306 del host está libre (los otros mysql usan 3307, 3308, 3309, 3310, 3311).
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-proot_pass"]
       interval: 5s
@@ -27,7 +26,7 @@ services:
 
   backend:
     image: node:20-alpine
-    container_name: examen3-backend
+    container_name: examen3juan-backend
     restart: unless-stopped
     network_mode: host
     working_dir: /app
@@ -42,12 +41,12 @@ services:
       - ./backend/node_modules:/app/node_modules
     environment:
       NODE_ENV: production
-      PORT: 3000
+      PORT: 3010
       DB_HOST: 127.0.0.1
       DB_PORT: 3306
-      DB_USER: ${DB_USER:-examen}
+      DB_USER: ${DB_USER:-examenjuan}
       DB_PASSWORD: ${DB_PASSWORD:-examen_pass}
-      DB_NAME: ${DB_NAME:-examen3}
+      DB_NAME: ${DB_NAME:-examen3juan}
       EXTERNAL_IMAGE_BASE_URL: https://picsum.photos
       EXTERNAL_IMAGE_WIDTH: 600
       EXTERNAL_IMAGE_HEIGHT: 400
@@ -57,5 +56,5 @@ services:
         condition: service_healthy
 
 volumes:
-  mysql_data:
+  examen3juan_mysql_data:
     driver: local
